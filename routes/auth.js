@@ -18,23 +18,25 @@ module.exports = function(app){
 			    if (!user) { 
 			    	console.log("Hi from 3")
 			    	res.json({succes:"not found"}); 
-			    }
-			    user.comparePassword(req.body.password, function(err, isMatch) {
-			      if (err) {
-			      	console.log("Hi from 4")
-			      	res.json({succes:"error"});
-			      }
-			      if(isMatch) {
-			      		console.log("Hi from 5")
-			      		res.json({
-			      			success: true,
-			      			user: user
-			      		})
-			      } else {
-			      		console.log("Hi from 6")
-			        	res.json({success:"wrong password"});
-			     }
-			});
-	})
+			    } else{
+			   		user.comparePassword(req.body.password, function(err, isMatch) {
+				      if (err) {
+				      	console.log("Hi from 4")
+				      	res.json({succes:"error"});
+				      }
+				      if(isMatch) {
+				      		console.log("Hi from 5")
+				      		res.json({
+				      			success: true,
+				      			user: user
+				      		})
+				      } else {
+				      		console.log("Hi from 6")
+				        	res.json({success:"wrong password"});
+				     }
+
+				});
+			}
+		})
 	})
 }
