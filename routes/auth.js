@@ -3,7 +3,7 @@
  * GET Users listing.
  */
 var Users = require('../data/models/User');
-
+var Partners = require('../data/models/Partner');
 
 module.exports = function(app){
 	app.post('/people/auth', function(req, res, next){
@@ -36,6 +36,33 @@ module.exports = function(app){
 
 				});
 			}
-		})
-	})
+		});
+	});
+
+	app.post('/partners/auth', function(req, res, next){
+		Partners.findOne(
+				{ username: req.body.username }, function(err, user) {
+			    if (err) { 
+			    	res.json({success:0}); 
+			    }
+			    if (!user) { 
+			    	res.json({success:0}); 
+			    } else{
+			   		user.comparePassword(req.body.password, function(err, isMatch) {
+				      if (err) {
+				      	res.json({success:0});
+				      }
+				      if(isMatch) {
+				      		res.json({
+				      			success: 1,
+				      			user: user
+				      		})
+				      } else {
+				        	res.json({success:"wrong password"});
+				     }
+
+				});
+			}
+		});
+	});
 }
