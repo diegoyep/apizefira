@@ -40,8 +40,8 @@ module.exports = function(app){
 	});
 
 	app.post('/partners/auth', function(req, res, next){
+		
 		Partners.findOne(
-				console.log(req.body);
 				{username: req.body.username}, function(err, user) {
 			    if (err) { 
 			    	console.log(1)
@@ -53,7 +53,7 @@ module.exports = function(app){
 			    } else{
 			   		user.comparePassword(req.body.password, function(err, isMatch) {
 				      if (err) {
-				      	console.log(3);
+				      	console.log(3)
 				      	res.json({success:0});
 				      }
 				      if(isMatch) {
